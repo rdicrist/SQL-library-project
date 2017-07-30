@@ -1,0 +1,97 @@
+//creates table that keeps track of the books, added 5 entries
+
+CREATE TABLE BOOK (BookId INTEGER PRIMARY KEY, Title TEXT, PublisherName TEXT);
+
+	INSERT INTO BOOK (BookId, Title, PublisherName)
+     VALUES (001, 'Lean In', 'NYC INC');
+
+	INSERT INTO BOOK (BookId, Title, PublisherName)
+     VALUES (002, 'Life of Pi', 'ABC INC');
+
+	INSERT INTO BOOK (BookId, Title, PublisherName)
+     VALUES (003, '1984', 'BB INC');
+    
+  INSERT INTO BOOK (BookId, Title, PublisherName)
+     VALUES (004, 'YOLO: My Story', 'NYC INC');
+     
+  INSERT INTO BOOK (BookId, Title, PublisherName)
+     VALUES (005, 'I Don't Know', 'NYC INC');
+
+
+//creates table that keeps track of the authors
+CREATE TABLE BOOK_AUTHORS (BookId INTEGER PRIMARY KEY, AuthorName TEXT);
+
+	INSERT INTO BOOK_AUTHORS (BookId, AuthorName)
+     VALUES (001, 'Sheryll Sandburg');
+
+	INSERT INTO BOOK_AUTHORS (BookId, AuthorName)
+     VALUES (002, 'Yann Martel');
+
+	INSERT INTO BOOK_AUTHORS (BookId, AuthorName)
+     VALUES (003, 'George Orwell');
+     
+//creates table that keeps track of the publishers
+CREATE TABLE PUBLISHER (Name TEXT PRIMARY KEY, Address TEXT, Phone INTEGER);
+
+	INSERT INTO PUBLISHER (Name, Address, Phone)
+     VALUES ('NYC INC', '1000 Park Ave', 9171234567);
+
+	INSERT INTO PUBLISHER (Name, Address, Phone)
+     VALUES ('ABC INC', '123 West St', 4138675309);
+
+	INSERT INTO PUBLISHER (Name, Address, Phone)
+     VALUES ('BB INC', '1 Merry Ln', 5041112222);
+
+//creates table that keeps track of the book copies
+CREATE TABLE BOOK_COPIES (BookId INTEGER, BranchId INTEGER, No_Of_Copies INTEGER, PRIMARY KEY (BookId, BranchId));
+
+	INSERT INTO BOOK_COPIES (BookId, BranchId, No_Of_Copies)
+     VALUES (001, 101, 6);
+
+	INSERT INTO BOOK_COPIES (BookId, BranchId, No_Of_Copies)
+     VALUES (002, 202, 8);
+
+	INSERT INTO BOOK_COPIES (BookId, BranchId, No_Of_Copies)
+     VALUES (003, 303, 1);
+
+//creates table that keeps track of the loans
+CREATE TABLE BOOK_LOANS (BookId INTEGER, BranchId INTEGER, CardNo INTEGER, DateOut DATE, DueDate DATE, PRIMARY KEY (BookId, BranchId, CardNo));
+
+	INSERT INTO BOOK_LOANS (BookId, BranchId, CardNo, DateOut,
+	DueDate)
+     VALUES (001, 101, 54321, 2015-12-12, 2016-01-10);
+
+	INSERT INTO BOOK_LOANS (BookId, BranchId, CardNo, DateOut,
+	DueDate)
+     VALUES (002, 202, 99999, 2016-04-16, 2016-04-26);
+
+INSERT INTO BOOK_LOANS (BookId, BranchId, CardNo, DateOut, DueDate)
+     VALUES (003, 303, 86753, 2016-04-25, 2016-05-05);
+
+//creates table that keeps track of the library branches
+CREATE TABLE LIBRARY_BRANCH (BranchId INTEGER PRIMARY KEY, BranchName TEXT, Address TEXT);
+
+	INSERT INTO LIBRARY_BRANCH (BranchId, BranchName, Address)
+     VALUES (101, 'New Orleans East', '123 Nola Dr');
+
+	INSERT INTO LIBRARY_BRANCH (BranchId, BranchName, Address)
+     VALUES (202, 'New Orleans West', '22 Bourbon St');
+
+	INSERT INTO LIBRARY_BRANCH (BranchId, BranchName, Address)
+     VALUES (303, 'New Orleans North', '999 Royal St');
+
+//creates table that keeps track of the borrowers of books
+CREATE TABLE BORROWER (CardNo INTEGER PRIMARY KEY, Name TEXT, Address TEXT, Phone INTEGER);
+
+	INSERT INTO BORROWER (CardNo, Name, Address, Phone)
+ 	 VALUES (54321, 'Erica DiCristoforo', '165 Town Farm Rd',
+	 4132832928);
+
+	INSERT INTO BORROWER (CardNo, Name, Address, Phone)
+     VALUES (99999, 'Matthew Schwolsky', '1045 Park Ave',
+	 9172328888);
+
+	INSERT INTO BORROWER (CardNo, Name, Address, Phone)
+     VALUES (86753, 'Tommy Tutone', '123 Lovely Ln', 5607776655);
+
+
