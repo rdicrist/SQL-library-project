@@ -1,0 +1,79 @@
+A- How many copies of the book titled “Lean In” are owned by the branch whose name is “New Orleans East”? 
+
+SELECT BOOK.Title, LIBRARY_BRANCH.BranchName, BOOK_COPIES.No_Of_Copies 
+FROM BOOK_COPIES, BOOK, LIBRARY_BRANCH
+WHERE BOOK.BookId = BOOK_COPIES.BookId 
+AND BOOK_COPIES.BranchId = LIBRARY_BRANCH.BranchId
+AND BOOK.Title = 'Lean In' 
+AND LIBRARY_BRANCH.BranchName = ‘New Orleans East’ ;
+
+B- How many copies of the book titled “Lean In” does each library branch own?	
+
+SELECT LIBRARY_BRANCH.BranchName, BOOK_COPIES.No_Of_Copies
+FROM BOOK_COPIES, BOOK, LIBRARY_BRANCH
+WHERE BOOK.BookId = BOOK_COPIES.BookId 
+AND BOOK_COPIES.BranchId = LIBRARY_BRANCH.BranchId
+AND BOOK.Title = 'Lean In' ;
+
+C- Retrieve the names of all borrowers who do not have any books checked out
+
+SELECT BORROWER.Name 
+FROM BORROWER
+LEFT JOIN BOOK_LOANS ON BORROWER.CardNo = BOOK_LOANS.CardNo
+WHERE BOOK_LOANS.CardNo IS NULL;
+
+D- For every library branch, retrieve the branch name
+
+SELECT BranchName FROM LIBRARY_BRANCH;
+
+E- For every library branch, retrieve the branch name and the total number of books loaned from that branch
+
+SELECT LIBRARY_BRANCH.BranchName, COUNT (BOOK_LOANS.BookId)
+FROM LIBRARY_BRANCH, BOOK_LOANS
+WHERE LIBRARY_BRANCH.BranchId = BOOK_LOANS.BranchId
+GROUP BY BOOK_LOANS.BranchId;
+
+F- Retrieve the book title, the borrowers name, and the borrowers address for every book loaned from ‘New Orleans East’ that is due back today
+
+SELECT BOOK.Title, BORROWER.Name, BORROWER.Address
+FROM BOOK, BORROWER, BOOK_LOANS, LIBRARY_BRANCH
+WHERE BOOK.BookId = BOOK_LOANS.BookId
+AND BOOK_LOANS.CardNo = BORROWER.CardNo
+AND BOOK_LOANS.BranchId = LIBRARY_BRANCH.BranchId
+AND BOOK_LOANS.DueDate = 2016-04-26
+AND LIBRARY_BRANCH.BranchName = 'New Orleans East' ;
+
+G- Retrieve the title and number of copies owned by ‘New Orleans East’ for every book (co)authored by ‘Sheryll Sandberg’
+
+SELECT BOOK.Title, BOOK_COPIES.No_Of_Copies 
+FROM BOOK, BOOK_COPIES, LIBRARY_BRANCH, BOOK_AUTHORS
+WHERE BOOK_COPIES.BranchId = LIBRARY_BRANCH.BranchId
+AND BOOK_COPIES.BookId = BOOK.BookId
+AND BOOK.BookId = BOOK_AUTHORS.BookId 
+AND LIBRARY_BRANCH.BranchName = 'New Orleans East'
+AND BOOK_AUTHORS.AuthorName LIKE '%Sheryll Sandburg%' ;
+
+H- Return the Book Name and Due Date for every book checked out by Erica DiCristoforo
+
+SELECT BOOK.Title, BOOK_LOANS.DueDate
+FROM BOOK, BOOK_LOANS, BORROWER
+WHERE BOOK_LOANS.CardNo = BORROWER.CardNo
+AND BOOK_LOANS.BookId = BOOK.BookId
+AND BORROWER.Name = ‘Erica DiCristoforo’ ;
+
+I- Show how many books in the database each publisher published
+
+SELECT PUBLISHER.Name, COUNT (BOOK.PublisherName)
+FROM PUBLISHER, BOOK
+WHERE BOOK.PublisherName = PUBLISHER.Name
+GROUP BY PUBLISHER.Name ;
+
+J- Display the Title, Author, Genre, Publisher, and number of copies for every book owned by ‘New Orleans East’
+
+SELECT BOOK.Title, BOOK_AUTHORS.AuthorName, GENRE.Genre, BOOK.PublisherName, BOOK_COPIES.No_Of_Copies
+FROM BOOK, BOOK_AUTHORS, GENRE, BOOK_COPIES, LIBRARY_BRANCH
+WHERE BOOK.BookId = BOOK_COPIES.BookId
+AND BOOK.BookId = GENRE.BookId
+AND BOOK.BookId = BOOK_AUTHORS.BookId
+AND BOOK_COPIES.BranchId = LIBRARY_BRANCH.BranchId
+AND LIBRARY_BRANCH.BranchName = ‘New Orleans East’ ;
